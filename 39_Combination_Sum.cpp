@@ -15,7 +15,7 @@ void print_ans(vector<vector<int>> ans) {
     }
 }
 
-bool helper(vector<vector<int>> &ans, vector<int> candidates, int target, int &start) {
+bool helper(vector<vector<int>> &ans, vector<int> candidates, int target, int start) {
     // std::cout << "target: " << target << std::endl;
     if (target == 0) { //success
         ans.push_back(vector<int>());
@@ -32,8 +32,10 @@ bool helper(vector<vector<int>> &ans, vector<int> candidates, int target, int &s
             if (helper(ans, candidates, target - c, start)) {
                 // ++start;
                 start = i + 1;
+                print_ans(ans);
                 // vector<int> curr = ans[ans.size() - 1];
-                ans[ans.size() - 1].push_back(c);
+                // curr.insert(curr.begin(), c);
+                ans[ans.size() - 1].insert(ans[ans.size() - 1].begin(), c); //only adds for one answer
                 has_success = true;
             }
         }
@@ -85,30 +87,30 @@ void compare(vector<vector<int>> attempt, vector<vector<int>> ans) {
 
 int main(){
     vector<vector<int>> cand = {
-        {2,3,6,7},
-        {2,3,5}, 
-        {2,3},
-        {2}
+        // {2,3,6,7},
+        // {2,3,5}, 
+        {2,3}
+        // {2}
     };
 
     vector<int> target = {
-        7,
-        8,
-        8,
-        1
+        // 7,
+        // 8,
+        8
+        // 1
     };
 
     vector<vector<vector<int>>> gold = {
-        {{2,2,3}, {7}},
-        {{2,2,2,2}, {2,3,3}, {3,5}},
-        {{2,2,2,2}, {2,3,3}},
-        {}
+        // {{2,2,3}, {7}},
+        // {{2,2,2,2}, {2,3,3}, {3,5}},
+        {{2,2,2,2}, {2,3,3}}
+        // {}
     };
 
     for (int i = 0; i < gold.size(); ++i) {
         vector<vector<int>> attempt = combinationSum(cand[i], target[i]);
         // print_ans(attempt);
-        compare(attempt, gold[i]);
+        // compare(attempt, gold[i]);
     }
 
     // vector<vector<int>> x = combinationSum(cand[0], target[0]);
